@@ -9,7 +9,7 @@ const schema = yup.object({
     name: yup.string().required("Full name is required"),
     email: yup.string().required("Email is required").email("Please enter a valid email"),
     phone: yup.string().required("Phone number is required").matches(/\(?\d{3}\)?-? *\d{3}-? *-?\d{4}/, "Phone number is not valid"),
-    guests: yup.number().required("Please specify number of diners"),
+    guests: yup.number().required("Please specify number of diners").typeError("Please select the number of diners"),
     date: yup.string().required("Please select a date"),
     time: yup.string().required("Please select a time"),
 })
@@ -40,7 +40,7 @@ function Form(props) {
                 </div>
                 <div className="field">
                     <label htmlFor="phone">Phone</label>
-                    <input type="tel" placeholder="Your Phone Number Here" name="telephone" {...register("phone")}/>
+                    <input type="tel" placeholder="Your Phone Number i.e. 705-888-8888" name="telephone" {...register("phone")}/>
                     <span className="error-message">{errors.phone?.message}</span>
                 </div>
                 <div className="field occasion">
@@ -57,7 +57,7 @@ function Form(props) {
                 </div>
                 <div className="field guest">
                     <label htmlFor="guests">Number of guests</label>
-                    <input type="number" placeholder="# of diners" name="guests" min="1" max="20" {...register("guests")}/>
+                    <input type="number" placeholder="Select the number of diners" name="guests" min="1" max="20" {...register("guests")}/>
                     <span className="error-message">{errors.guests?.message}</span>
                 </div>
                 <div className="field">

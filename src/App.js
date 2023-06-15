@@ -4,6 +4,7 @@ import Reservations from "./routes/Reservations";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useReducer} from "react";
 import { fetchAPI, submitAPI } from "./API/Api"
+import ConfirmedReservation from "./components/ConfirmedReservation";
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
               submitForm={submitForm}
             />
           }/>
+          <Route path="/confirmed" element={<ConfirmedReservation/> }/>
       </Routes>
     </>
   );

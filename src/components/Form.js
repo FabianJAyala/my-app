@@ -3,6 +3,7 @@ import "./styles/ReservationsPage.css";
 import {useForm} from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
     name: yup.string().required("Full name is required"),
@@ -14,13 +15,13 @@ const schema = yup.object({
 })
 
 function Form(props) {
-
+    const navigate = useNavigate();
     const { handleSubmit, register, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     })
     const onSubmit = (data, e) => {
-        alert(`Thanks ${data.name}, we have booked your reservation.`);
         reset();
+        navigate("/confirmed");
     }
     const onError = (errors, e) => alert("Please make sure the form is correctly filled before submitting.");
 
@@ -75,7 +76,7 @@ function Form(props) {
                     </div>
                 </div>
 
-                <button className="reserve-btn" type="submit">Book Now</button>
+                <button className="reserve-btn" type="submit" aria-label="Book Now">Book Now</button>
             </fieldset>
         </form>
   )

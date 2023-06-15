@@ -3,11 +3,11 @@ import HeaderElement from '../components/HeaderElement';
 import Footer from '../components/Footer';
 import ReservationsPage from '../components/ReservationsPage';
 
-const Reservations = () => {
+const Reservations = (props) => {
   return (
     <div>
       <HeaderElement />
-      <ReservationsPage />
+      <ReservationsPage availableTimes={props.availableTimes} dispatch={props.dispatch} submitForm={props.submitForm}/>
       <Footer />
     </div>
   )

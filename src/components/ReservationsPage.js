@@ -2,8 +2,7 @@ import React from 'react';
 import "./styles/ReservationsPage.css";
 import Form from './Form';
 
-function ReservationsPage() {
-
+function ReservationsPage(props){
   return (
     <div className="res-content-wrapper">
         <div className="res-content-container">
@@ -15,7 +14,7 @@ function ReservationsPage() {
             <div className="form">
                 <h1>Reserve a Table</h1>
                 <p>Please fill in with your information and book your reservation at Little Lemon.</p>
-                <Form />
+                <Form availableTimes={props.availableTimes} dispatch={props.dispatch} submitForm={props.submitForm}/>
             </div>
         </div>
     </div>

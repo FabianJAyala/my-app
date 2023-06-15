@@ -1,32 +1,31 @@
 import React from 'react';
 import "./styles/ReservationsPage.css";
 import {useForm} from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup"
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 const schema = yup.object({
     name: yup.string().required("Full name is required"),
     email: yup.string().required("Email is required").email("Please enter a valid email"),
     phone: yup.string().required("Phone number is required").matches(/\(?\d{3}\)?-? *\d{3}-? *-?\d{4}/, "Phone number is not valid"),
-    guests: yup.number().min(1, "There must be at least 1 guest").required("Please specify number of diners"),
-    date: yup.string().required("Please select date and time"),
+    guests: yup.number().required("Please specify number of diners"),
+    date: yup.string().required("Please select a date"),
+    time: yup.string().required("Please select a time"),
 })
 
-function Form() {
+function Form(props) {
 
-
-    const { handleSubmit, register, formState: { errors } } = useForm({
-        resolver: yupResolver(schema)
+    const { handleSubmit, register, reset, formState: { errors } } = useForm({
+        resolver: yupResolver(schema),
     })
-
-    console.log(errors)
-
-    const formSubmit = (data) => {
-        console.table(data)
+    const onSubmit = (data, e) => {
+        alert(`Thanks ${data.name}, we have booked your reservation.`);
+        reset();
     }
+    const onError = (errors, e) => alert("Please make sure the form is correctly filled before submitting.");
 
     return (
-        <form onSubmit={handleSubmit(formSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
             <fieldset>
                 <div className="field">
                     <label htmlFor="name">Full Name</label>
@@ -61,10 +60,21 @@ function Form() {
                     <span className="error-message">{errors.guests?.message}</span>
                 </div>
                 <div className="field">
-                    <label htmlFor="date">Reservation Date & Time</label>
-                    <input type="datetime-local" name="date" {...register("date")} />
+                    <label htmlFor="date">Reservation Date</label>
+                    <input type="date" name="date" {...register("date")} />
                     <span className="error-message">{errors.date?.message}</span>
                 </div>
+                <div className="field occasion">
+                    <label htmlFor="time">Reservation Time</label>
+                    <div className="options">
+                        <select id="time" {...register("time")}>
+                            <option value="">Select a Time</option>
+                            {props.availableTimes.availableTimes.map(availableTimes => {return <option key={availableTimes}>{availableTimes}</option>})}
+                        </select>
+                        <span className="error-message">{errors.time?.message}</span>
+                    </div>
+                </div>
+
                 <button className="reserve-btn" type="submit">Book Now</button>
             </fieldset>
         </form>
